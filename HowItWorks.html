@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — FitPaw</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal-50: #E1F5EE;
+      --teal-100: #9FE1CB;
+      --teal-400: #1D9E75;
+      --teal-600: #0F6E56;
+      --teal-800: #085041;
+      --amber-100: #FAC775;
+      --amber-400: #BA7517;
+      --coral-50: #FAECE7;
+      --coral-400: #D85A30;
+      --coral-600: #993C1D;
+      --gray-50: #F1EFE8;
+      --gray-100: #D3D1C7;
+      --gray-800: #444441;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f7f6f1;
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--teal-600);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--coral-400); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--gray-800);
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover,
+    nav ul a.active { color: var(--teal-400); }
+
+    .nav-cta {
+      background: var(--teal-400);
+      color: #fff !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--teal-600) !important; }
+
+    /* PAGE HEADER */
+    .page-header {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-400);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #1a1a18;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-header h1 em {
+      font-style: italic;
+      color: var(--teal-400);
+    }
+
+    .page-header h1 em.coral { color: var(--coral-400); }
+
+    .page-header p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #6b6b68;
+    }
+
+    /* STEPS */
+    .steps-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 2rem 5rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step.reverse { direction: rtl; }
+    .step.reverse > * { direction: ltr; }
+
+    .step-text {}
+
+    .step-number {
+      font-family: 'Fraunces', serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--teal-400);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .step-number::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 2px;
+      background: var(--teal-400);
+      border-radius: 2px;
+    }
+
+    .step-text h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #1a1a18;
+      margin-bottom: 1rem;
+    }
+
+    .step-text p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #6b6b68;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .step-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: #6b6b68;
+      line-height: 1.5;
+    }
+
+    .step-bullets li::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--teal-100);
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    /* STEP VISUALS */
+    .step-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .visual-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.75rem;
+      width: 300px;
+      border: 1px solid var(--gray-100);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    .visual-card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1a1a18;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Setup card */
+    .profile-setup {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .field-row {
+      background: var(--gray-50);
+      border-radius: 10px;
+      padding: 0.6rem 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .field-label {
+      font-size: 0.75rem;
+      color: #9b9b98;
+    }
+
+    .field-value {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #1a1a18;
+    }
+
+    .field-pill {
+      background: var(--teal-50);
+      color: var(--teal-600);
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    /* Track card */
+    .activity-log {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .log-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 10px;
+      background: var(--gray-50);
+    }
+
+    .log-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .log-info { flex: 1; }
+
+    .log-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #1a1a18;
+      line-height: 1.2;
+    }
+
+    .log-meta {
+      font-size: 0.7rem;
+      color: #9b9b98;
+    }
+
+    .log-badge {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+    }
+
+    .badge-teal { background: var(--teal-50); color: var(--teal-600); }
+    .badge-amber { background: #FAEEDA; color: var(--amber-400); }
+    .badge-coral { background: var(--coral-50); color: var(--coral-600); }
+
+    /* Insights card */
+    .insights-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .insight-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .insight-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    .insight-text {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #6b6b68;
+    }
+
+    .insight-text strong {
+      color: #1a1a18;
+      font-weight: 500;
+    }
+
+    .spark-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      margin-top: 0.75rem;
+    }
+
+    .spark-bar {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: var(--teal-100);
+    }
+
+    .spark-bar.active { background: var(--teal-400); }
+
+    /* CTA BAND */
+    .cta-band {
+      background: var(--teal-800);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .cta-band h2 em {
+      font-style: italic;
+      color: var(--teal-100);
+    }
+
+    .cta-band p {
+      font-size: 1rem;
+      color: var(--teal-100);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .btn-primary {
+      background: var(--coral-400);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--coral-600); transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.82rem;
+      color: #9b9b98;
+      border-top: 1px solid var(--gray-100);
+    }
+
+    footer strong {
+      font-family: 'Fraunces', serif;
+      color: var(--teal-600);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      nav ul { display: none; }
+      .page-header { padding: 3rem 1.25rem 2rem; }
+      .page-header h1 { font-size: 2.2rem; }
+      .step { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 0; }
+      .step.reverse { direction: ltr; }
+      .step-visual { order: -1; }
+      .step-text h2 { font-size: 1.6rem; }
+      .steps-section { padding: 1rem 1.25rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Fit<span>Paw</span></a>
+    <ul>
+      <li><a href="#">Features</a></li>
+      <li><a href="#" class="active">How it works</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#" class="nav-cta">Get started</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <p class="section-label">How it works</p>
+    <h1>Simple steps to a <em>happier</em>, <em class="coral">healthier</em> pet</h1>
+    <p>Getting started with FitPaw takes just a few minutes. Here's everything you need to know.</p>
+  </div>
+
+  <div class="steps-section">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-text">
+        <div class="step-number">Step 01</div>
+        <h2>Set up your pet's profile</h2>
+        <p>Tell us about your dog — their breed, age, weight, and health history. FitPaw uses this to personalise every recommendation just for them.</p>
+        <ul class="step-bullets">
+          <li>Supports dogs of all breeds, sizes, and ages</li>
+          <li>Add multiple pets to one account</li>
+          <li>Import existing vet records in seconds</li>
+        </ul>
+      </div>
+      <div class="step-visual">
+        <div class="visual-card">
+          <div class="visual-card-title">🐾 Biscuit's profile</div>
+          <div class="profile-setup">
+            <div class="field-row">
+              <span class="field-label">Breed</span>
+              <span class="field-value">Golden Retriever</span>
+            </div>
+            <div class="field-row">
+              <span class="field-label">Age</span>
+              <span class="field-value">3 years</span>
+            </div>
+            <div class="field-row">
+              <span class="field-label">Weight</span>
+              <span class="field-value">28 kg</span>
+            </div>
+            <div class="field-row">
+              <span class="field-label">Activity level</span>
+              <span class="field-pill">High energy</span>
+            </div>
+            <div class="field-row">
+              <span class="field-label">Diet</span>
+              <span class="field-value">Dry food · 2×/day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step reverse">
+      <div class="step-text">
+        <div class="step-number">Step 02</div>
+        <h2>Track activity &amp; nutrition daily</h2>
+        <p>Log walks, meals, water, and playtime in seconds. FitPaw builds a full picture of your dog's day so nothing important slips through the cracks.</p>
+        <ul class="step-bullets">
+          <li>Quick-log buttons for common activities</li>
+          <li>Automatic step counting via phone GPS</li>
+          <li>Meal and treat tracker with breed-specific portions</li>
+        </ul>
+      </div>
+      <div class="step-visual">
+        <div class="visual-card">
+          <div class="visual-card-title">📋 Today's log</div>
+          <div class="activity-log">
+            <div class="log-item">
+              <div class="log-icon" style="background:#E1F5EE;">🏃</div>
+              <div class="log-info">
+                <div class="log-name">Morning walk</div>
+                <div class="log-meta">7:32 AM · 2.4 km</div>
+              </div>
+              <span class="log-badge badge-teal">Done</span>
+            </div>
+            <div class="log-item">
+              <div class="log-icon" style="background:#FAEEDA;">🍖</div>
+              <div class="log-info">
+                <div class="log-name">Breakfast</div>
+                <div class="log-meta">8:10 AM · 220 g</div>
+              </div>
+              <span class="log-badge badge-amber">Logged</span>
+            </div>
+            <div class="log-item">
+              <div class="log-icon" style="background:#E1F5EE;">💧</div>
+              <div class="log-info">
+                <div class="log-name">Hydration</div>
+                <div class="log-meta">Goal: 800 ml</div>
+              </div>
+              <span class="log-badge badge-coral">55%</span>
+            </div>
+            <div class="log-item">
+              <div class="log-icon" style="background:#E1F5EE;">🎾</div>
+              <div class="log-info">
+                <div class="log-name">Playtime</div>
+                <div class="log-meta">Scheduled · 4:00 PM</div>
+              </div>
+              <span class="log-badge" style="background:var(--gray-50);color:#9b9b98;">Upcoming</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-text">
+        <div class="step-number">Step 03</div>
+        <h2>Get personalised insights &amp; alerts</h2>
+        <p>FitPaw analyses your pet's data over time and surfaces smart nudges — from adjusting meal sizes to flagging when activity drops below their healthy baseline.</p>
+        <ul class="step-bullets">
+          <li>Weekly health summaries delivered to your inbox</li>
+          <li>Vet visit reminders and vaccination alerts</li>
+          <li>Trend spotting across sleep, mood, and movement</li>
+        </ul>
+      </div>
+      <div class="step-visual">
+        <div class="visual-card">
+          <div class="visual-card-title">💡 This week's insights</div>
+          <div class="insights-list">
+            <div class="insight-item">
+              <div class="insight-dot" style="background:var(--teal-400);"></div>
+              <div class="insight-text"><strong>Activity up 18%</strong> compared to last week — great work!</div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-dot" style="background:var(--amber-400);"></div>
+              <div class="insight-text"><strong>Hydration low</strong> on 3 of 7 days. Try adding a second water bowl.</div>
+            </div>
+            <div class="insight-item">
+              <div class="insight-dot" style="background:var(--coral-400);"></div>
+              <div class="insight-text"><strong>Flea treatment due</strong> in 4 days. Tap to set a reminder.</div>
+            </div>
+          </div>
+          <div class="spark-row">
+            <div class="spark-bar" style="height:28px;"></div>
+            <div class="spark-bar" style="height:36px;"></div>
+            <div class="spark-bar active" style="height:44px;"></div>
+            <div class="spark-bar" style="height:32px;"></div>
+            <div class="spark-bar active" style="height:52px;"></div>
+            <div class="spark-bar active" style="height:48px;"></div>
+            <div class="spark-bar active" style="height:56px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta-band">
+    <h2>Ready to start your pet's <em>wellness journey?</em></h2>
+    <p>Join thousands of pet owners already using FitPaw to keep their dogs happy and healthy.</p>
+    <a href="#" class="btn-primary">Get started for free</a>
+  </div>
+
+  <footer>
+    &copy; 2026 <strong>FitPaw</strong> · Made with love for pets everywhere
+  </footer>
+
+</body>
+</html>
