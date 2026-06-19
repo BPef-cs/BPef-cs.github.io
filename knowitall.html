@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feed — FitPaw</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal-50: #E1F5EE;
+      --teal-100: #9FE1CB;
+      --teal-400: #1D9E75;
+      --teal-600: #0F6E56;
+      --teal-800: #085041;
+      --amber-100: #FAC775;
+      --amber-400: #BA7517;
+      --coral-50: #FAECE7;
+      --coral-400: #D85A30;
+      --coral-600: #993C1D;
+      --gray-50: #F1EFE8;
+      --gray-100: #D3D1C7;
+      --gray-800: #444441;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f7f6f1;
+      color: var(--gray-800);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: #fff;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--teal-600);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--coral-400); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--gray-800);
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover,
+    nav ul a.active { color: var(--teal-400); }
+
+    .nav-cta {
+      background: var(--teal-400);
+      color: #fff !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--teal-600) !important; }
+
+    /* PAGE HEADER */
+    .page-header {
+      text-align: center;
+      padding: 4rem 2rem 2.5rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal-400);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2.85rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #1a1a18;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-header h1 em {
+      font-style: italic;
+      color: var(--coral-400);
+    }
+
+    .page-header p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #6b6b68;
+    }
+
+    /* MAIN LAYOUT */
+    .feed-layout {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid var(--gray-100);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    .form-card h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a1a18;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .field {
+      margin-bottom: 1.1rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #6b6b68;
+      margin-bottom: 0.4rem;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 10px;
+      border: 1.5px solid var(--gray-100);
+      background: var(--gray-50);
+      color: #1a1a18;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--teal-400);
+      background: #fff;
+    }
+
+    .field-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Cups stepper */
+    .cups-stepper {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .cups-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1.5px solid var(--gray-100);
+      background: var(--gray-50);
+      color: var(--teal-600);
+      font-size: 1.1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      flex-shrink: 0;
+    }
+
+    .cups-btn:hover { background: var(--teal-50); border-color: var(--teal-400); }
+    .cups-btn:active { transform: scale(0.93); }
+
+    .cups-display {
+      flex: 1;
+      text-align: center;
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a18;
+    }
+
+    .cups-display span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #9b9b98;
+      display: block;
+      margin-top: 0.1rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--coral-400);
+      color: #fff;
+      border: none;
+      padding: 0.85rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .submit-btn:hover { background: var(--coral-600); transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+
+    .form-note {
+      font-size: 0.78rem;
+      color: #9b9b98;
+      text-align: center;
+      margin-top: 0.85rem;
+    }
+
+    /* RIGHT COLUMN — BOWL + LOG */
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Signature bowl element */
+    .bowl-card {
+      background: var(--teal-800);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bowl-card-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal-100);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+    }
+
+    .bowl-wrap {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 1.25rem;
+      position: relative;
+    }
+
+    .bowl-svg { width: 100%; height: 100%; display: block; }
+
+    .bowl-fill {
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center;
+    }
+
+    .bowl-kibble {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .bowl-kibble.show { opacity: 1; }
+
+    .bowl-stat {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .bowl-stat span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--teal-100);
+    }
+
+    .bowl-sub {
+      font-size: 0.82rem;
+      color: var(--teal-100);
+      margin-top: 0.4rem;
+    }
+
+    /* Log card */
+    .log-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.75rem;
+      border: 1px solid var(--gray-100);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    .log-card h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a1a18;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feed-log {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    .feed-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 10px;
+      background: var(--gray-50);
+      animation: slideIn 0.35s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feed-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--teal-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .feed-info { flex: 1; min-width: 0; }
+
+    .feed-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1a1a18;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .feed-meta {
+      font-size: 0.72rem;
+      color: #9b9b98;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .feed-amount {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--teal-600);
+      background: var(--teal-50);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    .feed-delete {
+      background: none;
+      border: none;
+      color: #c9c7bd;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.2rem 0.3rem;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+
+    .feed-delete:hover { color: var(--coral-400); }
+
+    .empty-state {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: #9b9b98;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .empty-state-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.6;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: #9b9b98;
+      font-size: 0.85rem;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      font-size: 0.82rem;
+      color: #9b9b98;
+      border-top: 1px solid var(--gray-100);
+    }
+
+    footer strong {
+      font-family: 'Fraunces', serif;
+      color: var(--teal-600);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--teal-800);
+      color: #fff;
+      padding: 0.7rem 1.25rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      z-index: 10;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feed-item { animation: none; }
+      .bowl-fill { transition: none; }
+      .submit-btn, .cups-btn { transition: none; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      nav ul { display: none; }
+      .page-header { padding: 3rem 1.25rem 2rem; }
+      .page-header h1 { font-size: 2.1rem; }
+      .feed-layout { grid-template-columns: 1fr; padding: 0 1.25rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Fit<span>Paw</span></a>
+    <ul>
+      <li><a href="index.html" class="nav-cta">Main page</a></li>
+      <li><a href="HowItWorks.html" class="nav-cta">How it works</a></li>
+      <li><a href="Feed.html" class="nav-cta active">Feed</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <p class="section-label">Mealtime, made easy</p>
+    <h1>Fill the bowl, <em>not the spreadsheet</em></h1>
+    <p>Log your dog's meal in a few taps. FitPaw remembers the rest — breed, weight, and every bowl you've filled.</p>
+  </div>
+
+  <div class="feed-layout">
+
+    <div class="form-card">
+      <h2>🐶 Log a meal</h2>
+      <form id="feed-form">
+        <div class="field">
+          <label for="dog-name">Dog's name</label>
+          <input type="text" id="dog-name" placeholder="e.g. Biscuit" required maxlength="40" />
+        </div>
+
+        <div class="field-row-2">
+          <div class="field">
+            <label for="dog-breed">Breed</label>
+            <input type="text" id="dog-breed" placeholder="e.g. Golden Retriever" required maxlength="40" />
+          </div>
+          <div class="field">
+            <label for="dog-weight">Weight (kg)</label>
+            <input type="number" id="dog-weight" placeholder="28" min="0" step="0.1" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="food-choice">Food</label>
+          <select id="food-choice" required>
+            <option value="" disabled selected>Choose a food</option>
+            <option>Dry kibble</option>
+            <option>Wet food</option>
+            <option>Raw food</option>
+            <option>Home-cooked</option>
+            <option>Mixed (wet + dry)</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Cups served</label>
+          <div class="cups-stepper">
+            <button type="button" class="cups-btn" id="cups-minus" aria-label="Decrease cups">−</button>
+            <div class="cups-display" id="cups-display">1<span>cups</span></div>
+            <button type="button" class="cups-btn" id="cups-plus" aria-label="Increase cups">+</button>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Add to the bowl</button>
+        <p class="form-note">Saved automatically — it'll be here next time you visit.</p>
+      </form>
+    </div>
+
+    <div class="right-col">
+      <div class="bowl-card">
+        <p class="bowl-card-label">Today's bowl</p>
+        <div class="bowl-wrap">
+          <svg class="bowl-svg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="70" cy="118" rx="38" ry="7" fill="#063D31" opacity="0.4"/>
+            <path d="M20 70 C20 100, 42 118, 70 118 C98 118, 120 100, 120 70 L120 60 L20 60 Z" fill="#0C5C49" stroke="#1D9E75" stroke-width="2"/>
+            <ellipse cx="70" cy="60" rx="50" ry="11" fill="#0F6E56" stroke="#1D9E75" stroke-width="2"/>
+            <g id="bowl-fill-group" class="bowl-fill" style="transform: scale(0);">
+              <ellipse cx="70" cy="62" rx="42" ry="8.5" fill="#FAC775"/>
+              <circle class="bowl-kibble" cx="58" cy="60" r="3.4" fill="#BA7517"/>
+              <circle class="bowl-kibble" cx="72" cy="63" r="3.8" fill="#D89B43"/>
+              <circle class="bowl-kibble" cx="84" cy="59" r="3.2" fill="#BA7517"/>
+              <circle class="bowl-kibble" cx="65" cy="58" r="3" fill="#D89B43"/>
+              <circle class="bowl-kibble" cx="78" cy="64" r="3.3" fill="#BA7517"/>
+            </g>
+          </svg>
+        </div>
+        <div class="bowl-stat" id="total-cups-today">0 <span>cups today</span></div>
+        <p class="bowl-sub" id="total-meals-today">No meals logged yet</p>
+      </div>
+
+      <div class="log-card">
+        <h2>📋 Recent meals</h2>
+        <div class="feed-log" id="feed-log">
+          <div class="loading-state">Loading the bowl…</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; 2026 <strong>FitPaw</strong> · Made with love for pets everywhere
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = 'feed-log-entries';
+    let entries = [];
+    let cups = 1;
+
+    const cupsDisplay = document.getElementById('cups-display');
+    const form = document.getElementById('feed-form');
+    const feedLogEl = document.getElementById('feed-log');
+    const bowlFillGroup = document.getElementById('bowl-fill-group');
+    const totalCupsEl = document.getElementById('total-cups-today');
+    const totalMealsEl = document.getElementById('total-meals-today');
+    const toastEl = document.getElementById('toast');
+
+    const FOOD_ICONS = {
+      'Dry kibble': '🥣',
+      'Wet food': '🍖',
+      'Raw food': '🥩',
+      'Home-cooked': '🍲',
+      'Mixed (wet + dry)': '🍽️',
+      'Other': '🦴'
+    };
+
+    function updateCupsDisplay() {
+      cupsDisplay.innerHTML = formatCups(cups) + '<span>cups</span>';
+    }
+
+    function formatCups(n) {
+      return (Number.isInteger(n) ? n : n.toFixed(1)).toString();
+    }
+
+    document.getElementById('cups-plus').addEventListener('click', () => {
+      cups = Math.round((cups + 0.5) * 10) / 10;
+      if (cups > 10) cups = 10;
+      updateCupsDisplay();
+    });
+
+    document.getElementById('cups-minus').addEventListener('click', () => {
+      cups = Math.round((cups - 0.5) * 10) / 10;
+      if (cups < 0.5) cups = 0.5;
+      updateCupsDisplay();
+    });
+
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 2200);
+    }
+
+    function isToday(isoString) {
+      const d = new Date(isoString);
+      const now = new Date();
+      return d.getFullYear() === now.getFullYear() &&
+             d.getMonth() === now.getMonth() &&
+             d.getDate() === now.getDate();
+    }
+
+    function timeAgoLabel(isoString) {
+      const d = new Date(isoString);
+      return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    }
+
+    function renderBowl() {
+      const todays = entries.filter(e => isToday(e.timestamp));
+      const totalCupsToday = todays.reduce((sum, e) => sum + e.cups, 0);
+
+      totalCupsEl.innerHTML = formatCups(totalCupsToday) + ' <span>cups today</span>';
+      totalMealsEl.textContent = todays.length === 0
+        ? 'No meals logged yet'
+        : `${todays.length} meal${todays.length === 1 ? '' : 's'} logged today`;
+
+      // Scale the kibble fill based on cups today, capped visually at ~6 cups
+      const fillScale = Math.min(1, todays.length === 0 ? 0 : 0.35 + (totalCupsToday / 6) * 0.65);
+      bowlFillGroup.style.transform = `scale(${fillScale})`;
+      bowlFillGroup.querySelectorAll('.bowl-kibble').forEach(k => {
+        k.classList.toggle('show', todays.length > 0);
+      });
+    }
+
+    function renderLog() {
+      if (entries.length === 0) {
+        feedLogEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">🐾</div>
+            Nothing in the bowl yet.<br>Log your first meal to get started.
+          </div>`;
+        return;
+      }
+
+      const sorted = [...entries].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      feedLogEl.innerHTML = sorted.map(e => `
+        <div class="feed-item" data-id="${e.id}">
+          <div class="feed-icon">${FOOD_ICONS[e.food] || '🍽️'}</div>
+          <div class="feed-info">
+            <div class="feed-name">${escapeHtml(e.name)} <span style="color:#9b9b98;font-weight:400;">· ${escapeHtml(e.breed)}</span></div>
+            <div class="feed-meta">${escapeHtml(e.food)} · ${timeAgoLabel(e.timestamp)}</div>
+          </div>
+          <span class="feed-amount">${formatCups(e.cups)} cup${e.cups === 1 ? '' : 's'}</span>
+          <button class="feed-delete" data-id="${e.id}" aria-label="Delete entry" title="Delete">✕</button>
+        </div>
+      `).join('');
+
+      feedLogEl.querySelectorAll('.feed-delete').forEach(btn => {
+        btn.addEventListener('click', () => deleteEntry(btn.dataset.id));
+      });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function render() {
+      renderBowl();
+      renderLog();
+    }
+
+    async function loadEntries() {
+      try {
+        const result = await window.storage.get(STORAGE_KEY, false);
+        entries = result && result.value ? JSON.parse(result.value) : [];
+      } catch (err) {
+        entries = [];
+      }
+      render();
+    }
+
+    async function saveEntries() {
+      try {
+        await window.storage.set(STORAGE_KEY, JSON.stringify(entries), false);
+      } catch (err) {
+        showToast("Couldn't save — try again");
+      }
+    }
+
+    async function deleteEntry(id) {
+      entries = entries.filter(e => e.id !== id);
+      render();
+      await saveEntries();
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('dog-name').value.trim();
+      const breed = document.getElementById('dog-breed').value.trim();
+      const weight = document.getElementById('dog-weight').value;
+      const food = document.getElementById('food-choice').value;
+
+      if (!name || !breed || !weight || !food) return;
+
+      const entry = {
+        id: 'entry_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+        name, breed,
+        weight: parseFloat(weight),
+        food, cups,
+        timestamp: new Date().toISOString()
+      };
+
+      entries.push(entry);
+      render();
+      showToast(`${name}'s bowl is filled 🐾`);
+
+      form.reset();
+      cups = 1;
+      updateCupsDisplay();
+      document.getElementById('dog-name').focus();
+
+      await saveEntries();
+    });
+
+    updateCupsDisplay();
+    loadEntries();
+  </script>
+
+</body>
+</html>
